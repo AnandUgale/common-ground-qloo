@@ -11,7 +11,22 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  audit-tooling:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Set up Node for credential-free tooling audit
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24.21.0'
+          package-manager-cache: false
+      - name: Resolve deployment tooling without executing install scripts
+        run: npm install --prefix "$RUNNER_TEMP/qloo-tooling" --package-lock-only --ignore-scripts --no-fund wrangler@4.136.3
+      - name: Report tooling advisories and block high severity findings
+        run: npm audit --prefix "$RUNNER_TEMP/qloo-tooling" --json --audit-level=high
+
   deploy:
+    needs: audit-tooling
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
