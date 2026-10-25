@@ -23,7 +23,7 @@ jobs:
       - name: Resolve deployment tooling without executing install scripts
         run: |
           mkdir -p "$RUNNER_TEMP/qloo-tooling"
-          npm install --prefix "$RUNNER_TEMP/qloo-tooling" --package-lock-only --ignore-scripts --no-fund wrangler@4.136.3
+          npm install --prefix "$RUNNER_TEMP/qloo-tooling" --package-lock-only --ignore-scripts --no-fund wrangler@4.152.0
       - name: Report tooling advisories and block high severity findings
         run: npm audit --prefix "$RUNNER_TEMP/qloo-tooling" --json --audit-level=high
 
@@ -68,6 +68,6 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 6cc80f0a98f39f64f0ea539f6cd267bd
           workingDirectory: project
-          wranglerVersion: '4.136.3'
+          wranglerVersion: '4.152.0'
           packageManager: npm
           command: deploy
