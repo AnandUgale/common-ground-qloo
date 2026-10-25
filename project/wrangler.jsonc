@@ -1,0 +1,10 @@
+{
+  "name": "common-ground-qloo",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-25",
+  "assets": {"directory": "./public", "binding": "ASSETS", "run_worker_first": ["/api/*"]},
+  "vars": {"QLOO_LIVE_ENABLED": "false", "QLOO_CONTRACT_VERIFIED": "false", "QLOO_BUDGET_VERIFIED": "false", "QLOO_MINUTE_LIMIT": "0", "QLOO_DAILY_LIMIT": "0", "QLOO_EVENT_LIMIT": "0"},
+  "durable_objects": {"bindings": [{"name":"QLOO_BUDGET","class_name":"QlooBudget"}]},
+  "migrations": [{"tag":"v1","new_sqlite_classes":["QlooBudget"]}],
+  "observability": {"enabled": false}
+}
