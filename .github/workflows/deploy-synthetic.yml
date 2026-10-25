@@ -11,27 +11,12 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  audit-tooling:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - name: Set up Node for credential-free tooling audit
-        uses: actions/setup-node@v7
-        with:
-          node-version: '24.21.0'
-          package-manager-cache: false
-      - name: Resolve deployment tooling without executing install scripts
-        run: |
-          mkdir -p "$RUNNER_TEMP/qloo-tooling"
-          npm install --prefix "$RUNNER_TEMP/qloo-tooling" --package-lock-only --ignore-scripts --no-fund wrangler@4.152.0
-      - name: Report tooling advisories and block high severity findings
-        run: npm audit --prefix "$RUNNER_TEMP/qloo-tooling" --json --audit-level=high
-
   deploy:
-    needs: audit-tooling
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      WRANGLER_SEND_METRICS: 'false'
     steps:
       - name: Check out the approved application snapshot
         uses: actions/checkout@v6
@@ -62,12 +47,30 @@ jobs:
         working-directory: project
         run: npm test
 
+      - name: Resolve isolated deployment tooling with patched Undici
+        run: |
+          mkdir -p "$RUNNER_TEMP/qloo-tooling"
+          cat > "$RUNNER_TEMP/qloo-tooling/package.json" <<'JSON'
+          {"private":true,"dependencies":{"wrangler":"4.152.0"},"overrides":{"undici":"7.30.1"}}
+          JSON
+          npm install --prefix "$RUNNER_TEMP/qloo-tooling" --package-lock-only --ignore-scripts --no-fund
+
+      - name: Audit the toolchain before installing or providing credentials
+        run: npm audit --prefix "$RUNNER_TEMP/qloo-tooling" --json --audit-level=high
+
+      - name: Install the audited lockfile without lifecycle scripts
+        run: npm ci --prefix "$RUNNER_TEMP/qloo-tooling" --ignore-scripts --no-fund
+
+      - name: Verify the actual Worker bundle without uploading
+        run: '"$RUNNER_TEMP/qloo-tooling/node_modules/.bin/wrangler" deploy --cwd project --dry-run --outdir "$RUNNER_TEMP/qloo-worker-bundle"'
+
       - name: Deploy synthetic app on the existing Free account
-        uses: cloudflare/wrangler-action@v4
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: 6cc80f0a98f39f64f0ea539f6cd267bd
-          workingDirectory: project
-          wranglerVersion: '4.152.0'
-          packageManager: npm
-          command: deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: 6cc80f0a98f39f64f0ea539f6cd267bd
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo '::error::CLOUDFLARE_API_TOKEN is missing from this repository Actions secret.'
+            exit 1
+          fi
+          "$RUNNER_TEMP/qloo-tooling/node_modules/.bin/wrangler" deploy --cwd project
