@@ -21,7 +21,9 @@ jobs:
           node-version: '24.21.0'
           package-manager-cache: false
       - name: Resolve deployment tooling without executing install scripts
-        run: npm install --prefix "$RUNNER_TEMP/qloo-tooling" --package-lock-only --ignore-scripts --no-fund wrangler@4.136.3
+        run: |
+          mkdir -p "$RUNNER_TEMP/qloo-tooling"
+          npm install --prefix "$RUNNER_TEMP/qloo-tooling" --package-lock-only --ignore-scripts --no-fund wrangler@4.136.3
       - name: Report tooling advisories and block high severity findings
         run: npm audit --prefix "$RUNNER_TEMP/qloo-tooling" --json --audit-level=high
 
