@@ -1,0 +1,56 @@
+name: Deploy reviewed synthetic Common Ground
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: common-ground-synthetic-deployment
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the approved application snapshot
+        uses: actions/checkout@v6
+        with:
+          ref: 9efbd77b76c489dfe762a1ac03fd2ed32589192d
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24.21.0'
+          package-manager-cache: false
+
+      - name: Verify synthetic configuration
+        working-directory: project
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import {readFileSync} from 'node:fs';
+          const config=JSON.parse(readFileSync('wrangler.jsonc','utf8'));
+          assert.equal(config.name,'common-ground-qloo');
+          for(const key of ['QLOO_LIVE_ENABLED','QLOO_CONTRACT_VERIFIED','QLOO_BUDGET_VERIFIED']) assert.equal(config.vars[key],'false');
+          for(const key of ['QLOO_MINUTE_LIMIT','QLOO_DAILY_LIMIT','QLOO_EVENT_LIMIT']) assert.equal(config.vars[key],'0');
+          assert.equal(config.vars.QLOO_API_KEY,undefined);
+          NODE
+
+      - name: Run the complete local test suite
+        working-directory: project
+        run: npm test
+
+      - name: Deploy synthetic app on the existing Free account
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: 6cc80f0a98f39f64f0ea539f6cd267bd
+          workingDirectory: project
+          wranglerVersion: '4.136.3'
+          packageManager: npm
+          command: deploy
