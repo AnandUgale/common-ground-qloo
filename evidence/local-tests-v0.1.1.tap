@@ -1,0 +1,226 @@
+TAP version 13
+# Subtest: live requires both explicit enablement and an approved key
+ok 1 - live requires both explicit enablement and an approved key
+  ---
+  duration_ms: 1.0434
+  type: 'test'
+  ...
+# Subtest: Qloo requests use exact documented paths, movie URN and header-only key
+ok 2 - Qloo requests use exact documented paths, movie URN and header-only key
+  ---
+  duration_ms: 16.9333
+  type: 'test'
+  ...
+# Subtest: malformed or nonmovie Qloo entities are rejected
+ok 3 - malformed or nonmovie Qloo entities are rejected
+  ---
+  duration_ms: 0.1719
+  type: 'test'
+  ...
+# Subtest: access failures and rate limits stop without leaking response body
+ok 4 - access failures and rate limits stop without leaking response body
+  ---
+  duration_ms: 0.6706
+  type: 'test'
+  ...
+# Subtest: six-call ceiling prevents retry loops
+ok 5 - six-call ceiling prevents retry loops
+  ---
+  duration_ms: 1.875
+  type: 'test'
+  ...
+# Subtest: 404 search is no-match; malformed JSON is unavailable
+ok 6 - 404 search is no-match; malformed JSON is unavailable
+  ---
+  duration_ms: 0.8384
+  type: 'test'
+  ...
+# Subtest: status discloses readiness, never credentials
+ok 7 - status discloses readiness, never credentials
+  ---
+  duration_ms: 1.2872
+  type: 'test'
+  ...
+# Subtest: API rejects other origins, unsupported types and excessive bodies
+ok 8 - API rejects other origins, unsupported types and excessive bodies
+  ---
+  duration_ms: 0.7204
+  type: 'test'
+  ...
+# Subtest: API returns labeled fixtures and unavailable live flow separately
+ok 9 - API returns labeled fixtures and unavailable live flow separately
+  ---
+  duration_ms: 1.6678
+  type: 'test'
+  ...
+# Subtest: configured key cannot bypass unverified live-contract gate
+ok 10 - configured key cannot bypass unverified live-contract gate
+  ---
+  duration_ms: 0.2075
+  type: 'test'
+  ...
+# Subtest: 200 with malformed envelope is not treated as an empty search
+ok 11 - 200 with malformed envelope is not treated as an empty search
+  ---
+  duration_ms: 0.261
+  type: 'test'
+  ...
+# Subtest: cancellation is propagated to the upstream request
+ok 12 - cancellation is propagated to the upstream request
+  ---
+  duration_ms: 0.4593
+  type: 'test'
+  ...
+# Subtest: max-min picks compromise instead of first person favorite
+ok 13 - max-min picks compromise instead of first person favorite
+  ---
+  duration_ms: 2.2181
+  type: 'test'
+  ...
+# Subtest: tie breaks by sum, then stable ID independent of input order
+ok 14 - tie breaks by sum, then stable ID independent of input order
+  ---
+  duration_ms: 0.1539
+  type: 'test'
+  ...
+# Subtest: exclusion preserves original retrieval ranks and never returns excluded movie
+ok 15 - exclusion preserves original retrieval ranks and never returns excluded movie
+  ---
+  duration_ms: 0.0883
+  type: 'test'
+  ...
+# Subtest: intersection requires evidence for every person
+ok 16 - intersection requires evidence for every person
+  ---
+  duration_ms: 0.085
+  type: 'test'
+  ...
+# Subtest: duplicate IDs and wrong entity types fail closed
+ok 17 - duplicate IDs and wrong entity types fail closed
+  ---
+  duration_ms: 0.2254
+  type: 'test'
+  ...
+# Subtest: group size, inputs and expansion flags are bounded
+ok 18 - group size, inputs and expansion flags are bounded
+  ---
+  duration_ms: 0.1924
+  type: 'test'
+  ...
+# Subtest: agent completes only after resolving and retrieving all people
+ok 19 - agent completes only after resolving and retrieving all people
+  ---
+  duration_ms: 3.1587
+  type: 'test'
+  ...
+# Subtest: ambiguous identity blocks retrieval until a verified choice
+ok 20 - ambiguous identity blocks retrieval until a verified choice
+  ---
+  duration_ms: 0.1897
+  type: 'test'
+  ...
+# Subtest: missing entity does not produce a candidate or baseline substitute
+ok 21 - missing entity does not produce a candidate or baseline substitute
+  ---
+  duration_ms: 0.1272
+  type: 'test'
+  ...
+# Subtest: pool expansion requires explicit choice and preserves exclusions
+ok 22 - pool expansion requires explicit choice and preserves exclusions
+  ---
+  duration_ms: 0.451
+  type: 'test'
+  ...
+# Subtest: transport failure and empty result stay distinguishable
+ok 23 - transport failure and empty result stay distinguishable
+  ---
+  duration_ms: 0.2459
+  type: 'test'
+  ...
+# Subtest: cancelled resolution cannot continue to Insights or a second search
+ok 24 - cancelled resolution cannot continue to Insights or a second search
+  ---
+  duration_ms: 0.1835
+  type: 'test'
+  ...
+# Subtest: partial candidate retrieval failure never returns completed group output
+ok 25 - partial candidate retrieval failure never returns completed group output
+  ---
+  duration_ms: 0.1433
+  type: 'test'
+  ...
+# Subtest: source mode mismatch cannot return fixture success through live path
+ok 26 - source mode mismatch cannot return fixture success through live path
+  ---
+  duration_ms: 0.0756
+  type: 'test'
+  ...
+# Subtest: shared quota reserves capacity once per run across simultaneous callers
+ok 27 - shared quota reserves capacity once per run across simultaneous callers
+  ---
+  duration_ms: 2.6459
+  type: 'test'
+  ...
+# Subtest: daily reset retains event cap and state survives new reservation calls
+ok 28 - daily reset retains event cap and state survives new reservation calls
+  ---
+  duration_ms: 0.4167
+  type: 'test'
+  ...
+# Subtest: UTC minute rollover does not reset daily usage or refund failed runs
+ok 29 - UTC minute rollover does not reset daily usage or refund failed runs
+  ---
+  duration_ms: 0.2793
+  type: 'test'
+  ...
+# Subtest: quota policy is disabled by default and malformed settings cannot initialize counters
+ok 30 - quota policy is disabled by default and malformed settings cannot initialize counters
+  ---
+  duration_ms: 0.339
+  type: 'test'
+  ...
+# Subtest: lowered budget and backwards clock do not replenish reservations
+ok 31 - lowered budget and backwards clock do not replenish reservations
+  ---
+  duration_ms: 0.4105
+  type: 'test'
+  ...
+# Subtest: missing, failed or malformed shared-budget replies fail closed
+ok 32 - missing, failed or malformed shared-budget replies fail closed
+  ---
+  duration_ms: 16.0481
+  type: 'test'
+  ...
+# Subtest: all groups use one fixed object and reserve the full 2N bound
+ok 33 - all groups use one fixed object and reserve the full 2N bound
+  ---
+  duration_ms: 0.945
+  type: 'test'
+  ...
+# Subtest: API cannot reach Qloo when a configured key lacks shared quota
+ok 34 - API cannot reach Qloo when a configured key lacks shared quota
+  ---
+  duration_ms: 2.2372
+  type: 'test'
+  ...
+# Subtest: body limit counts UTF-8 bytes and cancels the reader at the boundary
+ok 35 - body limit counts UTF-8 bytes and cancels the reader at the boundary
+  ---
+  duration_ms: 1.5796
+  type: 'test'
+  ...
+# Subtest: a stalled coordinator fails within ten seconds and a late grant cannot call Qloo
+ok 36 - a stalled coordinator fails within ten seconds and a late grant cannot call Qloo
+  ---
+  duration_ms: 8004.7464
+  type: 'test'
+  ...
+1..36
+# tests 36
+# suites 0
+# pass 36
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8170.9278
