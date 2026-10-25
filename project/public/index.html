@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Common Ground · Choose together</title><link rel="stylesheet" href="/style.css"><script src="/app.js" type="module"></script></head>
+<body><header><a class="brand" href="/">◒ Common Ground</a><span class="pill">LOCAL PROTOTYPE</span></header>
+<main><section class="intro"><p class="eyebrow">LESS COMPROMISE BY ONE PERSON. MORE COMMON GROUND.</p><h1>Different tastes.<br>One movie night.</h1><p class="lede">Find an option that holds up for everyone, with the reasoning in plain sight.</p></section>
+<aside id="source-notice" class="notice"><strong>Synthetic fixture mode</strong><p>Every movie, ID and ranking in this demonstration is invented. No Qloo request has been made. This is a local engineering prototype.</p></aside>
+<div class="workspace"><section class="panel"><div class="section-title"><span class="number">01</span><h2>Bring your tastes</h2></div>
+<form id="preferences"><label for="mode">Data source</label><select id="mode"><option value="fixture">Synthetic contract fixtures</option><option value="live" disabled>Live Qloo · access unavailable</option></select>
+<div id="fixture-controls"><label for="scenario">Try a scenario</label><select id="scenario"><option value="overlap">Different favorites, a shared option</option><option value="conflict">No overlap until you expand</option><option value="sparse">Sparse evidence</option><option value="unavailable">Source unavailable</option></select><p class="hint">Fixture favorites: Aurora, Mariner, Atlas. Try “Echo” for ambiguity or an unknown name for no match.</p></div>
+<div class="person"><label for="person0">Person 1 <span>· favorite movie</span></label><input id="person0" maxlength="80" value="Aurora" required><div id="choices0"></div></div>
+<div class="person"><label for="person1">Person 2 <span>· favorite movie</span></label><input id="person1" maxlength="80" value="Mariner" required><div id="choices1"></div></div>
+<div class="person"><label for="person2">Person 3 <span>· optional favorite</span></label><input id="person2" maxlength="80" value="Atlas"><div id="choices2"></div></div>
+<p class="hint">Use fictional or consented tastes. No location, account or personal profile is needed. Live mode sends favorites to Qloo when enabled.</p>
+<button id="find" class="primary" type="submit">Find common ground <span>↗</span></button></form>
+<div id="exclusions" hidden><p id="excluded-text"></p><button id="clear-exclusions" class="quiet" type="button">Clear movie exclusions</button></div>
+</section><section class="results" aria-live="polite" aria-busy="false"><div class="section-title"><span class="number">02</span><h2>A choice you can inspect</h2></div><div id="result"><div class="empty"><span class="orbit">◒</span><h3>Everyone gets a seat at the table.</h3><p>Add two or three favorites. We look for a movie present in every candidate list, then minimize the worst observed rank.</p></div></div>
+<button id="expand" class="secondary" type="button" hidden>Expand pools to 40 · new run, up to 6 requests</button>
+<details id="trace-box" hidden><summary>Inspect the agent’s decisions</summary><ol id="trace"></ol></details></section></div>
+<section class="method"><div><p class="eyebrow">WHAT THE RANKS MEAN</p><h2>A transparent convention.<br>Room for human judgment.</h2></div><p>Lower ranks come first. We minimize the worst rank across people, then the total rank. A missing candidate is missing evidence. These ranks are not probabilities, personal satisfaction scores, or proof that a movie is available to watch.</p></section>
+</main><footer>Original local prototype · Live integration and public judge access unverified · No prize or submission claimed</footer></body></html>
